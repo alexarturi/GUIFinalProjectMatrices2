@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1ad587da-5e0a-44ee-9a1b-2179f8e457a6" name="Changes" comment="">
+    <list default="true" id="1ad587da-5e0a-44ee-9a1b-2179f8e457a6" name="Changes" comment="edmond">
+      <change afterPath="$PROJECT_DIR$/src/MatrixFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/matrixGUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/matrixGUI.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/matrixGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/matrixGUI.java" afterDir="false" />
@@ -41,9 +42,16 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;
   }
 }</component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="GUIFinalProjectMatrices2" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MatrixFrame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="MatrixFrame" />
       <module name="GUIFinalProjectMatrices2" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -52,6 +60,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
+        <item itemvalue="Application.MatrixFrame" />
       </list>
     </recent_temporary>
   </component>
@@ -64,6 +73,14 @@
       <option name="presentableId" value="Default" />
       <updated>1685459956615</updated>
     </task>
+    <task id="LOCAL-00001" summary="edmond">
+      <created>1685547030456</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1685547030456</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -76,5 +93,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="edmond" />
+    <option name="LAST_COMMIT_MESSAGE" value="edmond" />
   </component>
 </project>
