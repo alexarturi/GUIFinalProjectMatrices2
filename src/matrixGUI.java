@@ -44,14 +44,19 @@ public class matrixGUI extends JFrame implements ActionListener, KeyListener {
             System.out.println("Columns 1: " + cols1);
             System.out.println("Rows 2: " + rows2);
             System.out.println("Columns 2: " + cols2);
+            dispose();
 
-            JPanel second = new JPanel();
-            JTable matrix1 = new JTable();
-            JTable matrix2 = new JTable();
-            second.add(matrix1);
-            second.add(matrix2);
-            setContentPane(second);
-            revalidate();
+            JFrame input = new JFrame();
+            input.setVisible(true);
+            input.setSize()
+//            JPanel second = new JPanel();
+//
+//            JTable matrix1 = new JTable();
+//            JTable matrix2 = new JTable();
+//            second.add(matrix1);
+//            second.add(matrix2);
+//            setVisible(true);
+//            setContentPane(second);
         }
     }
 

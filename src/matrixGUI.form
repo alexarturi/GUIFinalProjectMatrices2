@@ -24,7 +24,9 @@
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <text value="1"/>
+        </properties>
       </component>
       <component id="63953" class="javax.swing.JTextField" binding="colField1">
         <constraints>
@@ -32,7 +34,9 @@
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <text value="1"/>
+        </properties>
       </component>
       <component id="1d66" class="javax.swing.JLabel" binding="rowLabel1">
         <constraints>
@@ -72,7 +76,9 @@
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <text value="1"/>
+        </properties>
       </component>
       <component id="e7e83" class="javax.swing.JTextField" binding="colField2">
         <constraints>
@@ -80,7 +86,9 @@
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <text value="1"/>
+        </properties>
       </component>
       <component id="117f4" class="javax.swing.JLabel" binding="colLabel2">
         <constraints>
