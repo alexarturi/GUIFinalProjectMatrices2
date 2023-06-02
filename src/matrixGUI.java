@@ -20,6 +20,12 @@ public class matrixGUI extends JFrame implements ActionListener, KeyListener {
     private JTable matrix2;
     private JScrollPane scrollPane1;
     private JScrollPane scrollPane2;
+    private JButton addButton;
+    private JButton subtractButton;
+    private JButton scalarButton;
+    private JButton multiplyButton;
+    private JButton inverseButton;
+    private JPanel menuPanel;
 
     public matrixGUI(){
         createUIComponents();
@@ -49,10 +55,6 @@ public class matrixGUI extends JFrame implements ActionListener, KeyListener {
                 int cols1 = Integer.parseInt(colField1.getText());
                 int rows2 = Integer.parseInt(rowField2.getText());
                 int cols2 = Integer.parseInt(colField2.getText());
-                System.out.println("Rows 1: " + rows1);
-                System.out.println("Columns 1: " + cols1);
-                System.out.println("Rows 2: " + rows2);
-                System.out.println("Columns 2: " + cols2);
                 dispose();
 
                 JFrame input = new JFrame();
@@ -66,18 +68,16 @@ public class matrixGUI extends JFrame implements ActionListener, KeyListener {
                 realMatrix1 = new double[rows1][cols1];
                 for (int i=0; i<rows1; i++){
                     for (int c=0; c<cols1; c++){
-                        matrix1.setValueAt("0", i, c);
+                        matrix1.setValueAt(0.0, i, c);
                     }
                 }
                 matrix2 = new JTable(rows2, cols2);
                 realMatrix2 = new double[rows2][cols2];
                 for (int i=0; i<rows2; i++){
                     for (int c=0; c<cols2; c++){
-                        matrix2.setValueAt("0", i, c);
+                        matrix2.setValueAt(0.0, i, c);
                     }
                 }
-                System.out.println(matrix1.getColumnCount());
-                System.out.println(matrix1.getRowCount());
 
                 scrollPane1 = new JScrollPane(matrix1);
                 scrollPane2 = new JScrollPane(matrix2);
@@ -87,7 +87,26 @@ public class matrixGUI extends JFrame implements ActionListener, KeyListener {
                 // Add scroll panes to the frame
                 input.add(scrollPane1);
                 input.add(scrollPane2);
-                input.add(inputValues);
+
+                menuPanel = new JPanel();
+                addButton = new JButton("Add");
+                addButton.addActionListener(this);
+                subtractButton = new JButton("Subtract");
+                subtractButton.addActionListener(this);
+                scalarButton = new JButton("Scalar Multiplication");
+                scalarButton.addActionListener(this);
+                multiplyButton = new JButton("Multiply Matrices");
+                multiplyButton.addActionListener(this);
+                inverseButton = new JButton("Find Inverse");
+                inverseButton.addActionListener(this);
+                menuPanel.add(inputValues);
+                menuPanel.add(addButton);
+                menuPanel.add(subtractButton);
+                menuPanel.add(scalarButton);
+                menuPanel.add(multiplyButton);
+                menuPanel.add(inverseButton);
+                menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.PAGE_AXIS));
+                input.add(menuPanel);
 
                 input.setLayout(new java.awt.FlowLayout());
 
@@ -97,30 +116,95 @@ public class matrixGUI extends JFrame implements ActionListener, KeyListener {
             } else if (butt.getText().equals("Input Values")){
                 for (int row=0; row<realMatrix1.length; row++){
                     for (int col=0; col<realMatrix1[0].length; col++){
-                        realMatrix1[row][col] = (double) matrix1.getValueAt(row,col);
+                        if (matrix1.getValueAt(row,col) instanceof String){
+                            String temp = (String) matrix1.getValueAt(row,col);
+                            realMatrix1[row][col] = Double.parseDouble(temp);
+                        } else {
+                            realMatrix1[row][col]= (double) matrix1.getValueAt(row,col);
+                        }
+
                     }
                 }
                 for (int row=0; row<realMatrix2.length; row++){
                     for (int col=0; col<realMatrix2[0].length; col++){
-                        realMatrix2[row][col] = (double) matrix2.getValueAt(row,col);
+                        if (matrix2.getValueAt(row,col) instanceof String){
+                            String temp = (String) matrix2.getValueAt(row,col);
+                            realMatrix2[row][col] = Double.parseDouble(temp);
+                        } else {
+                            realMatrix2[row][col]= (double) matrix2.getValueAt(row,col);
+                        }
                     }
                 }
+            } else if (butt.getText().equals("Add")) {
+                JFrame addFrame = new JFrame();
 
-                System.out.println("Matrix 1 Test: ");
-                for (int row=0; row<realMatrix1.length; row++){
-                    for (int col=0; col<realMatrix1[0].length; col++){
-                        System.out.print(realMatrix1[row][col] + " ");
-                    }
-                    System.out.println();
-                }
+                addFrame.setVisible(true);
+                addFrame.setSize(500, 400);
+                addFrame.setLocation(450,100);
+                addFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                addFrame.setTitle("Matrix Addition");
 
-                System.out.println("Matrix 2 Test: ");
-                for (int row=0; row<realMatrix2.length; row++){
-                    for (int col=0; col<realMatrix2[0].length; col++){
-                        System.out.print(realMatrix2[row][col] + " ");
-                    }
-                    System.out.println();
-                }
+                addFrame.setLayout(new java.awt.FlowLayout());
+
+                addFrame.pack();
+                addFrame.setVisible(true);
+                addFrame.revalidate();
+            } else if (butt.getText().equals("Subtract")){
+                JFrame subtractFrame = new JFrame();
+
+                subtractFrame.setVisible(true);
+                subtractFrame.setSize(500, 400);
+                subtractFrame.setLocation(450,100);
+                subtractFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                subtractFrame.setTitle("Matrix Subtraction");
+
+                subtractFrame.setLayout(new java.awt.FlowLayout());
+
+                subtractFrame.pack();
+                subtractFrame.setVisible(true);
+                subtractFrame.revalidate();
+            } else if (butt.getText().equals("Scalar Multiplication")) {
+                JFrame scalarMultiplyFrame = new JFrame();
+
+                scalarMultiplyFrame.setVisible(true);
+                scalarMultiplyFrame.setSize(500, 400);
+                scalarMultiplyFrame.setLocation(450,100);
+                scalarMultiplyFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                scalarMultiplyFrame.setTitle("Scalar Multiplication");
+
+                scalarMultiplyFrame.setLayout(new java.awt.FlowLayout());
+
+                scalarMultiplyFrame.pack();
+                scalarMultiplyFrame.setVisible(true);
+                scalarMultiplyFrame.revalidate();
+            } else if (butt.getText().equals("Multiply Matrices")){
+                JFrame matrixMultiplicationFrame = new JFrame();
+
+                matrixMultiplicationFrame.setVisible(true);
+                matrixMultiplicationFrame.setSize(500, 400);
+                matrixMultiplicationFrame.setLocation(450,100);
+                matrixMultiplicationFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                matrixMultiplicationFrame.setTitle("Matrix Multiplication");
+
+                matrixMultiplicationFrame.setLayout(new java.awt.FlowLayout());
+
+                matrixMultiplicationFrame.pack();
+                matrixMultiplicationFrame.setVisible(true);
+                matrixMultiplicationFrame.revalidate();
+            } else if (butt.getText().equals("Find Inverse")){
+                JFrame inverseFrame = new JFrame();
+
+                inverseFrame.setVisible(true);
+                inverseFrame.setSize(500, 400);
+                inverseFrame.setLocation(450,100);
+                inverseFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                inverseFrame.setTitle("Matrix Inversion");
+
+                inverseFrame.setLayout(new java.awt.FlowLayout());
+
+                inverseFrame.pack();
+                inverseFrame.setVisible(true);
+                inverseFrame.revalidate();
             }
         }
     }
