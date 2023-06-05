@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1ad587da-5e0a-44ee-9a1b-2179f8e457a6" name="Changes" comment="edmond">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MatrixFrame.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MatrixSolver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MatrixSolver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/matrixGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/matrixGUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

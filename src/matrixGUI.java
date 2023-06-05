@@ -22,10 +22,16 @@ public class matrixGUI extends JFrame implements ActionListener, KeyListener {
     private JScrollPane scrollPane2;
     private JButton addButton;
     private JButton subtractButton;
-    private JButton scalarButton;
+    private JButton scalarButton1;
+    private JButton scalarButton2;
     private JButton multiplyButton;
-    private JButton inverseButton;
+    private JButton inverseButton1;
+    private JButton inverseButton2;
     private JPanel menuPanel;
+    private JButton performScalarMultiplication1;
+    private JButton performScalarMultiplication2;
+    private double scalar;
+    private JTextField input;
 
     public matrixGUI(){
         createUIComponents();
@@ -93,18 +99,24 @@ public class matrixGUI extends JFrame implements ActionListener, KeyListener {
                 addButton.addActionListener(this);
                 subtractButton = new JButton("Subtract");
                 subtractButton.addActionListener(this);
-                scalarButton = new JButton("Scalar Multiplication");
-                scalarButton.addActionListener(this);
+                scalarButton1 = new JButton("Scalar Multiplication: Matrix 1");
+                scalarButton1.addActionListener(this);
+                scalarButton2 = new JButton("Scalar Multiplication: Matrix 2");
+                scalarButton2.addActionListener(this);
                 multiplyButton = new JButton("Multiply Matrices");
                 multiplyButton.addActionListener(this);
-                inverseButton = new JButton("Find Inverse");
-                inverseButton.addActionListener(this);
+                inverseButton1 = new JButton("Find Inverse: Matrix 1");
+                inverseButton1.addActionListener(this);
+                inverseButton2 = new JButton("Find Inverse: Matrix 2");
+                inverseButton2.addActionListener(this);
                 menuPanel.add(inputValues);
                 menuPanel.add(addButton);
                 menuPanel.add(subtractButton);
-                menuPanel.add(scalarButton);
                 menuPanel.add(multiplyButton);
-                menuPanel.add(inverseButton);
+                menuPanel.add(scalarButton1);
+                menuPanel.add(scalarButton2);
+                menuPanel.add(inverseButton1);
+                menuPanel.add(inverseButton2);
                 menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.PAGE_AXIS));
                 input.add(menuPanel);
 
@@ -141,9 +153,23 @@ public class matrixGUI extends JFrame implements ActionListener, KeyListener {
                 addFrame.setVisible(true);
                 addFrame.setSize(500, 400);
                 addFrame.setLocation(450,100);
-                addFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                addFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
                 addFrame.setTitle("Matrix Addition");
 
+                double[][] temp = MatrixSolver.add(realMatrix1, realMatrix2);
+                if (temp==null){
+                    JLabel nullReturn = new JLabel("Sorry this operation couldn't be performed");
+                    addFrame.add(nullReturn);
+                } else {
+                    JTable addMatrix = new JTable(temp.length, temp[0].length);
+                    for (int row = 0; row< temp.length; row++){
+                        for (int col = 0; col< temp[0].length; col++){
+                            addMatrix.setValueAt(temp[row][col], row, col);
+                        }
+                    }
+                    JScrollPane addScroll = new JScrollPane(addMatrix);
+                    addFrame.add(addScroll);
+                }
                 addFrame.setLayout(new java.awt.FlowLayout());
 
                 addFrame.pack();
@@ -155,22 +181,62 @@ public class matrixGUI extends JFrame implements ActionListener, KeyListener {
                 subtractFrame.setVisible(true);
                 subtractFrame.setSize(500, 400);
                 subtractFrame.setLocation(450,100);
-                subtractFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                subtractFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
                 subtractFrame.setTitle("Matrix Subtraction");
+
+                double[][] temp = MatrixSolver.subtract(realMatrix1, realMatrix2);
+                if (temp==null){
+                    JLabel nullReturn = new JLabel("Sorry this operation couldn't be performed");
+                    subtractFrame.add(nullReturn);
+                } else {
+                    JTable subMatrix = new JTable(temp.length, temp[0].length);
+                    for (int row = 0; row< temp.length; row++){
+                        for (int col = 0; col< temp[0].length; col++){
+                            subMatrix.setValueAt(temp[row][col], row, col);
+                        }
+                    }
+                    JScrollPane addScroll = new JScrollPane(subMatrix);
+                    subtractFrame.add(addScroll);
+                }
 
                 subtractFrame.setLayout(new java.awt.FlowLayout());
 
                 subtractFrame.pack();
                 subtractFrame.setVisible(true);
                 subtractFrame.revalidate();
-            } else if (butt.getText().equals("Scalar Multiplication")) {
+            } else if (butt.getText().equals("Scalar Multiplication: Matrix 1")) {
                 JFrame scalarMultiplyFrame = new JFrame();
 
                 scalarMultiplyFrame.setVisible(true);
                 scalarMultiplyFrame.setSize(500, 400);
                 scalarMultiplyFrame.setLocation(450,100);
-                scalarMultiplyFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-                scalarMultiplyFrame.setTitle("Scalar Multiplication");
+                scalarMultiplyFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+                scalarMultiplyFrame.setTitle("Input your constant");
+
+                input = new JTextField(10);
+                scalarMultiplyFrame.add(input);
+                performScalarMultiplication1 = new JButton("Perform Scalar Multiplication: Matrix 1");
+                performScalarMultiplication1.addActionListener(this);
+                scalarMultiplyFrame.add(performScalarMultiplication1);
+
+                scalarMultiplyFrame.setLayout(new java.awt.FlowLayout());
+
+                scalarMultiplyFrame.setVisible(true);
+                scalarMultiplyFrame.revalidate();
+            } else if (butt.getText().equals("Scalar Multiplication: Matrix 2")){
+                JFrame scalarMultiplyFrame = new JFrame();
+
+                scalarMultiplyFrame.setVisible(true);
+                scalarMultiplyFrame.setSize(500, 400);
+                scalarMultiplyFrame.setLocation(450,100);
+                scalarMultiplyFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+                scalarMultiplyFrame.setTitle("Input your constant");
+
+                input = new JTextField(10);
+                scalarMultiplyFrame.add(input);
+                performScalarMultiplication2 = new JButton("Perform Scalar Multiplication: Matrix 2");
+                performScalarMultiplication2.addActionListener(this);
+                scalarMultiplyFrame.add(performScalarMultiplication2);
 
                 scalarMultiplyFrame.setLayout(new java.awt.FlowLayout());
 
@@ -183,28 +249,135 @@ public class matrixGUI extends JFrame implements ActionListener, KeyListener {
                 matrixMultiplicationFrame.setVisible(true);
                 matrixMultiplicationFrame.setSize(500, 400);
                 matrixMultiplicationFrame.setLocation(450,100);
-                matrixMultiplicationFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                matrixMultiplicationFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
                 matrixMultiplicationFrame.setTitle("Matrix Multiplication");
+
+                double[][] temp = MatrixSolver.multiply(realMatrix1, realMatrix2);
+                if (temp==null){
+                    JLabel nullReturn = new JLabel("Sorry this operation couldn't be performed");
+                    matrixMultiplicationFrame.add(nullReturn);
+                } else {
+                    JTable multiplyMatrix = new JTable(temp.length, temp[0].length);
+                    for (int row = 0; row< temp.length; row++){
+                        for (int col = 0; col< temp[0].length; col++){
+                            multiplyMatrix.setValueAt(temp[row][col], row, col);
+                        }
+                    }
+                    JScrollPane addScroll = new JScrollPane(multiplyMatrix);
+                    matrixMultiplicationFrame.add(addScroll);
+                }
 
                 matrixMultiplicationFrame.setLayout(new java.awt.FlowLayout());
 
                 matrixMultiplicationFrame.pack();
                 matrixMultiplicationFrame.setVisible(true);
                 matrixMultiplicationFrame.revalidate();
-            } else if (butt.getText().equals("Find Inverse")){
+            } else if (butt.getText().equals("Find Inverse: Matrix 1")){
                 JFrame inverseFrame = new JFrame();
 
                 inverseFrame.setVisible(true);
                 inverseFrame.setSize(500, 400);
                 inverseFrame.setLocation(450,100);
-                inverseFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                inverseFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
                 inverseFrame.setTitle("Matrix Inversion");
+
+                double[][] temp = MatrixSolver.findInverse(realMatrix1);
+                if (temp==null){
+                    JLabel nullReturn = new JLabel("Sorry this operation couldn't be performed");
+                    inverseFrame.add(nullReturn);
+                } else {
+                    JTable inverseMatrix = new JTable(temp.length, temp[0].length);
+                    for (int row = 0; row< temp.length; row++){
+                        for (int col = 0; col< temp[0].length; col++){
+                            inverseMatrix.setValueAt(temp[row][col], row, col);
+                        }
+                    }
+                    JScrollPane addScroll = new JScrollPane(inverseMatrix);
+                    inverseFrame.add(addScroll);
+                }
 
                 inverseFrame.setLayout(new java.awt.FlowLayout());
 
                 inverseFrame.pack();
                 inverseFrame.setVisible(true);
                 inverseFrame.revalidate();
+            } else if (butt.getText().equals("Find Inverse: Matrix 2")){
+                JFrame inverseFrame = new JFrame();
+
+                inverseFrame.setVisible(true);
+                inverseFrame.setSize(500, 400);
+                inverseFrame.setLocation(450,100);
+                inverseFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+                inverseFrame.setTitle("Matrix Inversion");
+
+                double[][] temp = MatrixSolver.findInverse(realMatrix2);
+                if (temp==null){
+                    JLabel nullReturn = new JLabel("Sorry this operation couldn't be performed");
+                    inverseFrame.add(nullReturn);
+                } else {
+                    JTable inverseMatrix = new JTable(temp.length, temp[0].length);
+                    for (int row = 0; row< temp.length; row++){
+                        for (int col = 0; col< temp[0].length; col++){
+                            inverseMatrix.setValueAt(temp[row][col], row, col);
+                        }
+                    }
+                    JScrollPane addScroll = new JScrollPane(inverseMatrix);
+                    inverseFrame.add(addScroll);
+                }
+                inverseFrame.setLayout(new java.awt.FlowLayout());
+
+                inverseFrame.pack();
+                inverseFrame.setVisible(true);
+                inverseFrame.revalidate();
+            } else if (butt.getText().equals("Perform Scalar Multiplication: Matrix 1")) {
+                JFrame answerFrame = new JFrame("Scalar Multiplication");
+                answerFrame.setVisible(true);
+                answerFrame.setSize(500, 400);
+                answerFrame.setLocation(450,100);
+                answerFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
+                double num = Double.parseDouble(input.getText());
+                double[][] temp = MatrixSolver.scalarMultiplication(num, realMatrix1);
+
+                JTable scalarMatrix = new JTable(temp.length, temp[0].length);
+                for (int row = 0; row< temp.length; row++){
+                    for (int col = 0; col< temp[0].length; col++){
+                        scalarMatrix.setValueAt(temp[row][col], row, col);
+                    }
+                }
+                JScrollPane addScroll = new JScrollPane(scalarMatrix);
+                answerFrame.add(addScroll);
+
+                answerFrame.setLayout(new java.awt.FlowLayout());
+
+                answerFrame.pack();
+                answerFrame.setVisible(true);
+                answerFrame.revalidate();
+            } else if (butt.getText().equals("Perform Scalar Multiplication: Matrix 2")) {
+                JFrame answerFrame = new JFrame("Scalar Multiplication");
+                answerFrame.setVisible(true);
+                answerFrame.setSize(500, 400);
+                answerFrame.setLocation(450,100);
+                answerFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
+                double num = Double.parseDouble(input.getText());
+                System.out.println(input.getText());
+                double[][] temp = MatrixSolver.scalarMultiplication(num, realMatrix2);
+
+                JTable scalarMatrix = new JTable(temp.length, temp[0].length);
+                for (int row = 0; row< temp.length; row++){
+                    for (int col = 0; col< temp[0].length; col++){
+                        scalarMatrix.setValueAt(temp[row][col], row, col);
+                    }
+                }
+                JScrollPane addScroll = new JScrollPane(scalarMatrix);
+                answerFrame.add(addScroll);
+
+                answerFrame.setLayout(new java.awt.FlowLayout());
+
+                answerFrame.pack();
+                answerFrame.setVisible(true);
+                answerFrame.revalidate();
             }
         }
     }
@@ -224,4 +397,3 @@ public class matrixGUI extends JFrame implements ActionListener, KeyListener {
 
     }
 }
-

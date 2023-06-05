@@ -9,7 +9,7 @@ public class MatrixSolver {
 
         for (int row = 0; row < matrix1.length; row++) {
             for (int col = 0; col < matrix1[0].length; col++) {
-                ret[row][col] = matrix1[row][col] + matrix2[row][col];
+                ret[row][col] = round(matrix1[row][col] + matrix2[row][col],3);
             }
         }
 
@@ -25,7 +25,7 @@ public class MatrixSolver {
 
         for (int row = 0; row < matrix1.length; row++) {
             for (int col = 0; col < matrix1[0].length; col++) {
-                ret[row][col] = matrix1[row][col] - matrix2[row][col];
+                ret[row][col] = round(matrix1[row][col] - matrix2[row][col],3);
             }
         }
 
@@ -47,69 +47,8 @@ public class MatrixSolver {
 
         for (int row = 0; row < ret.length; row++) {
             for (int col = 0; col < ret[0].length; col++) {
-                ret[row][col]*=100;
-                ret[row][col] = (double)Math.round(ret[row][col])/100;
+                ret[row][col] = round(ret[row][col],3);
             }
-        }
-        return ret;
-    }
-
-    public static boolean isInverse(double[][] matrix1, double[][] matrix2) {
-        double[][] product = multiply(matrix1,matrix2);
-        double[][] identity = new double[product.length][product[0].length];
-
-        for (int i = 0; i < identity.length; i++) {
-            if (i < identity[0].length) {
-                identity[i][i] = 1;
-            }
-            else {
-                break;
-            }
-        }
-
-        for (double[] row : identity) {
-            for (double col : row) {
-                System.out.print(col + " ");
-            }
-            System.out.println();
-        }
-
-        for (int row = 0; row < identity.length; row++) {
-            for (int col = 0; col < identity[0].length; col++) {
-                if (product[row][col]!=identity[row][col]) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    public static double[][] findInverse(double[][] matrix){
-        if (matrix.length != matrix[0].length || (matrix.length!=2 || matrix[0].length!=2)){
-            return null;
-        }
-
-        double[][] ret = new double[matrix.length][matrix.length];
-        if (ret.length==2){
-            ret[0][0] = matrix[1][1];
-            ret[0][1] = -1 * matrix[0][1];
-            ret[1][0] = -1 * matrix[1][0];
-            ret[1][1] = matrix[0][0];
-            double multiplier = (1.0)/(matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]);
-            for (int row = 0; row<ret.length; row++){
-                for (int col = 0; col<ret[0].length; col++){
-                    ret[row][col] *= multiplier;
-                }
-            }
-        }
-        for (int row = 0; row < ret.length; row++) {
-            for (int col = 0; col < ret[0].length; col++) {
-                ret[row][col]*=100;
-                ret[row][col] = (double)Math.round(ret[row][col])/100;
-            }
-        }
-        if (Math.abs(ret[0][0])>1000000) {
-            return null;
         }
         return ret;
     }
@@ -122,10 +61,79 @@ public class MatrixSolver {
         }
         for (int row = 0; row < matrix.length; row++) {
             for (int col = 0; col < matrix[0].length; col++) {
-                matrix[row][col]*=100;
-                matrix[row][col] = (double)Math.round(matrix[row][col])/100;
+                matrix[row][col] = round(matrix[row][col],3);
             }
         }
         return matrix;
+    }
+
+    public static double[][] findInverse(double[][] matrix) {
+        if (matrix.length != matrix[0].length){
+            return null;
+        }
+        int n = matrix.length;
+        double[][] augmentedMatrix = new double[n][2 * n];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                augmentedMatrix[i][j] = matrix[i][j];
+                augmentedMatrix[i][j + n] = (i == j) ? 1 : 0;
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            double pivot = augmentedMatrix[i][i];
+            for (int j = 0; j < 2 * n; j++) {
+                augmentedMatrix[i][j] /= pivot;
+            }
+            for (int k = 0; k < n; k++) {
+                if (k != i) {
+                    double factor = augmentedMatrix[k][i];
+                    for (int j = 0; j < 2 * n; j++) {
+                        augmentedMatrix[k][j] -= factor * augmentedMatrix[i][j];
+                    }
+                }
+            }
+        }
+
+        double[][] inverseMatrix = new double[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                inverseMatrix[i][j] = augmentedMatrix[i][j + n];
+            }
+        }
+
+        boolean isPossible = false;
+        for (double[] row : inverseMatrix) {
+            for (double col : row) {
+                if (col!=0) {
+                    isPossible = true;
+                    break;
+                }
+            }
+        }
+
+        if (!isPossible) {
+            return null;
+        }
+
+        for (int row = 0; row < inverseMatrix.length; row++) {
+            for (int col = 0; col < inverseMatrix[0].length; col++) {
+                inverseMatrix[row][col] = round(inverseMatrix[row][col],3);
+            }
+        }
+
+        if (Math.abs(inverseMatrix[0][0])>100000){
+            return null;
+        }
+
+        return inverseMatrix;
+    }
+
+    public static double round(double value, int places) {
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long temp = Math.round(value);
+        return (double) temp / factor;
     }
 }
