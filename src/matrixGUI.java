@@ -30,7 +30,6 @@ public class matrixGUI extends JFrame implements ActionListener, KeyListener {
     private JPanel menuPanel;
     private JButton performScalarMultiplication1;
     private JButton performScalarMultiplication2;
-    private double scalar;
     private JTextField input;
 
     public matrixGUI(){
